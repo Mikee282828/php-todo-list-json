@@ -8,6 +8,17 @@ createApp({
         }
     },
     methods: {
+        boolOrderer() {
+            let j = 0;
+            for (let i = 0; i < this.tasks.length; i++) {
+                if (this.tasks[j].done) {
+                    this.tasks.push(this.tasks[j]);
+                    this.tasks.splice(j, 1);
+                } else {
+                    j++;
+                }
+            }
+        },
         checkDone(bool) {
             if (bool) {
                 return "done";
@@ -21,6 +32,7 @@ createApp({
             } else {
                 this.tasks[index].done = true;
             }
+            this.boolOrderer();
         },
         checkBkg(bool) {
             if (bool) {
@@ -31,9 +43,9 @@ createApp({
         },
         addTask(titolo) {
             let task = {
-                "title" : titolo,
-                "done" : false,
-                "Date" : Date.now,
+                "title": titolo,
+                "done": false,
+                "Date": Date.now,
             };
             this.tasks.unshift(task);
             this.tempTitle = "";
@@ -42,6 +54,7 @@ createApp({
     mounted() {
         axios.get("../server.php").then(result => {
             this.tasks = result.data;
+            this.boolOrderer();
         })
     }
 }).mount('#app')
