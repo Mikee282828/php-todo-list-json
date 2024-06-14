@@ -42,13 +42,34 @@ createApp({
             }
         },
         addTask(titolo) {
-            let task = {
-                "title": titolo,
-                "done": false,
-                "Date": Date.now,
-            };
-            this.tasks.unshift(task);
-            this.tempTitle = "";
+            // if (titolo != "") {
+            //     let task = {
+            //         "title": titolo,
+            //         "done": false,
+            //         "Date": Date.now,
+            //     };
+            //     this.tasks.unshift(task);
+            //     this.tempTitle = "";
+            // }
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+            if (titolo != "") {
+                let task = {
+                    "title": titolo,
+                    "done": "",
+                    "Date": "11/11/11",
+                };
+                axios.post("../server.php", task, config).then(result => {
+                    console.log("Risultati ", result.data);
+                    this.tasks = result.data;
+                    this.boolOrderer();
+                    this.tempTitle = "";
+                });
+            }
+
         }
     },
     mounted() {
