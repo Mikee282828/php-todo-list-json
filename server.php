@@ -1,12 +1,11 @@
 <?php
 
 header("Content-Type: application/json");
+$fileContent = file_get_contents("dati.json");
 
 if (isset($_POST["title"])) {
 
-    $prova = file_get_contents("dati.json");
-
-    $tasks = json_decode($prova,true); //il true serve per dire che è un array associativo
+    $tasks = json_decode($fileContent,true); //il true serve per dire che è un array associativo
 
     $newTask = [
         "title" => $_POST["title"],
@@ -15,15 +14,11 @@ if (isset($_POST["title"])) {
     ];
 
     $tasks[] = $newTask;
+
+    $fileContent = json_encode($tasks);
     
-    file_put_contents("dati.json",json_encode($tasks));
+    file_put_contents("dati.json",$fileContent);
+    
+} 
 
-    echo json_encode($tasks);
-
-} else {
-    $prova = file_get_contents("dati.json");
-
-    header("Content-Type: application/json");
-
-    echo $prova;
-}
+echo $fileContent;
