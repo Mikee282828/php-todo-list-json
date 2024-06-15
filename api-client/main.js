@@ -5,6 +5,11 @@ createApp({
         return {
             tasks: "",
             tempTitle: "",
+            config: {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
         }
     },
     methods: {
@@ -20,18 +25,25 @@ createApp({
             }
         },
         checkDone(bool) {
-            if (bool) {
-                return "done";
-            } else {
-                return "undone";
-            }
+            let variable = bool ? "done" : "undone";
+            return variable;
         },
         switchBool(bool, index) {
-            if (bool) {
-                this.tasks[index].done = false;
-            } else {
-                this.tasks[index].done = true;
+            // if (bool) {
+            //     this.tasks[index].done = false;
+            // } else {
+            //     this.tasks[index].done = true;
+            // }
+            let data = {
+                "booleano": bool,
+                "indice": index
             }
+
+            axios.post("../updateTask.php", data, this.config).then(result => {
+                console.log(result.data);
+                this.tasks = result.data;
+                this.tempTitle = "";
+            })
             this.boolOrderer();
         },
         checkBkg(bool) {
@@ -42,18 +54,13 @@ createApp({
             }
         },
         addTask(titolo) {
-            const config = {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }
             if (titolo != "") {
                 let task = {
                     "title": titolo,
                     "done": false,
                     "Date": "11/11/11",
                 };
-                axios.post("../create.php", task, config).then(result => {
+                axios.post("../create.php", task, this.config).then(result => {
                     console.log("Risultati ", result.data);
                     this.tasks = result.data;
                     this.boolOrderer();
