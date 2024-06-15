@@ -42,15 +42,6 @@ createApp({
             }
         },
         addTask(titolo) {
-            // if (titolo != "") {
-            //     let task = {
-            //         "title": titolo,
-            //         "done": false,
-            //         "Date": Date.now,
-            //     };
-            //     this.tasks.unshift(task);
-            //     this.tempTitle = "";
-            // }
             const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -59,10 +50,10 @@ createApp({
             if (titolo != "") {
                 let task = {
                     "title": titolo,
-                    "done": "",
+                    "done": false,
                     "Date": "11/11/11",
                 };
-                axios.post("../server.php", task, config).then(result => {
+                axios.post("../create.php", task, config).then(result => {
                     console.log("Risultati ", result.data);
                     this.tasks = result.data;
                     this.boolOrderer();
@@ -73,7 +64,7 @@ createApp({
         }
     },
     mounted() {
-        axios.get("../server.php").then(result => {
+        axios.get("../list.php").then(result => {
             this.tasks = result.data;
             this.boolOrderer();
         })
