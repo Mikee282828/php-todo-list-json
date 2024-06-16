@@ -13,17 +13,17 @@ createApp({
         }
     },
     methods: {
-        boolOrderer() {
-            let j = 0;
-            for (let i = 0; i < this.tasks.length; i++) {
-                if (this.tasks[j].done) {
-                    this.tasks.push(this.tasks[j]);
-                    this.tasks.splice(j, 1);
-                } else {
-                    j++;
-                }
-            }
-        },
+        // boolOrderer() {
+        //     let j = 0;
+        //     for (let i = 0; i < this.tasks.length; i++) {
+        //         if (this.tasks[j].done) {
+        //             this.tasks.push(this.tasks[j]);
+        //             this.tasks.splice(j, 1);
+        //         } else {
+        //             j++;
+        //         }
+        //     }
+        // },
         checkDone(bool) {
             let variable = bool ? "done" : "undone";
             return variable;
@@ -44,7 +44,7 @@ createApp({
                 this.tasks = result.data;
                 this.tempTitle = "";
             })
-            this.boolOrderer();
+            // this.boolOrderer();
         },
         checkBkg(bool) {
             if (bool) {
@@ -63,7 +63,7 @@ createApp({
                 axios.post("../create.php", task, this.config).then(result => {
                     console.log("Risultati ", result.data);
                     this.tasks = result.data;
-                    this.boolOrderer();
+                    // this.boolOrderer();
                     this.tempTitle = "";
                 });
             }
@@ -73,7 +73,7 @@ createApp({
     mounted() {
         axios.get("../list.php").then(result => {
             this.tasks = result.data;
-            this.boolOrderer();
+            // this.boolOrderer();
         })
     }
 }).mount('#app')
