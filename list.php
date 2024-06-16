@@ -1,4 +1,8 @@
 <?php
 $fileContent = file_get_contents("dati.json");
 
-echo $fileContent;
+$tasks = json_decode($fileContent,true);
+
+include "boolOrderer.php";
+
+echo json_encode($tasks);
