@@ -13,8 +13,8 @@ if (isset($_POST["title"])) {
 
     $tasks[] = $task;
 
-    include "boolOrderer";
-    
+    include "boolOrderer.php";
+
     $newFileContent = json_encode($tasks);
 
     file_put_contents("dati.json", $newFileContent);
