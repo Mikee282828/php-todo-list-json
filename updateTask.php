@@ -3,7 +3,7 @@ $fileContent = file_get_contents("dati.json");
 
 $tasks = json_decode($fileContent,true);
 
-$bool = true;
+include "boolOrderer.php";
 
 if($_POST["booleano"]=="true"){
     $bool = false;
